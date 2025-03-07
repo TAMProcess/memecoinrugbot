@@ -18,13 +18,9 @@ main_menu_keyboard.add(types.InlineKeyboardButton("Vouches", url="https://t.me/v
 async def start_cmd(message: types.Message):
     """Handle /start command: greets the user as 'Guest' and shows main menu."""
     welcome_text = (
-        "Hello, Guest!\n"
-        "Welcome to the bot. Use the menu below to navigate:\n"
-        "Dashboard - Overview\n"
-        "Features - Learn what this bot can do\n"
-        "Purchase & Pricing - Buy access or features\n"
-        "More Info - Additional information\n"
-        "Vouches - See user testimonials"
+        "Main Menu"
+        "User: 920330\n"
+        "Version: 4.88.00"
     )
     # Send welcome message with main menu inline keyboard
     await message.answer(welcome_text, reply_markup=main_menu_keyboard)
