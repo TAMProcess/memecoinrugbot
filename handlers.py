@@ -8,6 +8,7 @@ dp = Dispatcher(bot)
 # Helper: main menu keyboard
 main_menu_keyboard = types.InlineKeyboardMarkup()
 main_menu_keyboard.add(types.InlineKeyboardButton("Dashboard", callback_data="dashboard"))
+main_menu_keyboard.add(types.InlineKeyboardButton("RugBot", callback_data="RugBot"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Features", callback_data="features"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Purchase & Pricing", callback_data="purchase"))
 main_menu_keyboard.add(types.InlineKeyboardButton("More Info", callback_data="moreinfo"))
@@ -22,7 +23,7 @@ async def start_cmd(message: types.Message):
         "User: 92033820\n"
         "Version: 4.88.00\n"
         "@RugbotHelp\n"
-        "Welcome to MemeCoinRugBot an all one bundler & Trading Bot\n"
+        "Welcome to MemeCoinRugBot an all one Bundler & Trading Bot\n"
     )
     # Send welcome message with main menu inline keyboard
     await message.answer(welcome_text, reply_markup=main_menu_keyboard)
@@ -84,8 +85,8 @@ async def purchase_section(callback: types.CallbackQuery):
     """Shows the Purchase & Pricing section with payment info and a refresh option."""
     purchase_text = (
         "💰 *Purchase & Pricing:*\n"
-        "30 Day License - 1 SOL.\n"
-        "Ownership      - 4 SOL.\n"
+        "3 Day Trial License - 1 SOL.\n"
+        "Ownership           - 4 SOL.\n"
         f"*SOL Address:* `{config.SOL_ADDRESS}`\n\n"
         "Message @Rugbothelp for support\n"
         "After sending payment, click Refresh to check for updates.\n"
@@ -117,3 +118,17 @@ async def more_info_section(callback: types.CallbackQuery):
     info_kb = types.InlineKeyboardMarkup().add(back_btn)
     await callback.message.edit_text(info_text, reply_markup=info_kb)
     await callback.answer()
+
+# Callback handler for More RugBot section
+@dp.callback_query_handler(lambda c: c.data == 'RugBot')
+async def RugBot_section(callback: types.CallbackQuery):
+    """Leads to the Rug Bot and a back button."""
+    RugBot_text = (
+        "ℹ️ *RugBot:*\n"
+
+    )
+    back_btn = types.InlineKeyboardButton("Back", callback_data="back")
+    info_kb = types.InlineKeyboardMarkup().add(back_btn)
+    await callback.message.edit_text(RugBot, reply_markup=RugBot_kb)
+    await callback.answer()
+
