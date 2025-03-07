@@ -1,16 +1,11 @@
 [phases.setup]
 nixpkgs = ["python311", "gcc"]
 
-[phases.build]
+[phases.install]
 cmds = [
-  "python -m venv venv",
-  ". venv/bin/activate",
   "pip install --upgrade pip",
   "pip install -r requirements.txt"
 ]
 
-[phases.start]
-cmds = [
-  ". venv/bin/activate",
-  "python bot.py"
-]
+[start]
+cmd = "python bot.py"
