@@ -1,8 +1,5 @@
 app = "your-fly-app-name"
 
-[build]
-  image = "python:3.11-slim"
-
 [env]
   PYTHONUNBUFFERED = "1"
 
