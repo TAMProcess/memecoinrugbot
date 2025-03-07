@@ -18,9 +18,11 @@ main_menu_keyboard.add(types.InlineKeyboardButton("Vouches", url="https://t.me/v
 async def start_cmd(message: types.Message):
     """Handle /start command: greets the user as 'Guest' and shows main menu."""
     welcome_text = (
-        "Main Menu"
-        "User: 920330\n"
-        "Version: 4.88.00"
+        "-Main Menu-\n"
+        "User: 92033820\n"
+        "Version: 4.88.00\n"
+        "@RugbotHelp\n"
+        "Welcome to MemeCoinRugBot an all one bundler & Trading Bot\n"
     )
     # Send welcome message with main menu inline keyboard
     await message.answer(welcome_text, reply_markup=main_menu_keyboard)
@@ -31,9 +33,11 @@ async def back_to_main(callback: types.CallbackQuery):
     """Handles 'Dashboard' and 'Back' button presses by returning to main menu."""
     # Edit the message to show the main menu again
     main_text = (
-        "Main Menu"
-        "User: 920330\n"
-        "Version: 4.88.00"
+        "-Main Menu-\n"
+        "User: 92033820\n"
+        "Version: 4.88.00\n"
+        "@RugbotHelp\n"
+        "Welcome to MemeCoinRugBot an all one bundler & Trading Bot\n"
     )
     # Re-use the same main menu keyboard
     await callback.message.edit_text(main_text, reply_markup=main_menu_keyboard)
@@ -44,11 +48,29 @@ async def back_to_main(callback: types.CallbackQuery):
 async def features_section(callback: types.CallbackQuery):
     """Shows the Features section and a back button."""
     features_text = (
-        "📋 *Features:*\n"
-        "- Feature 1: Description of feature 1.\n"
-        "- Feature 2: Description of feature 2.\n"
-        "- Feature 3: Description of feature 3.\n\n"
-        "Explore the above features of the bot."
+        "📋 *Features:*\n\n"
+        "Pump.fun Volume + Bundler + Bump It + Comment Bot\n\n"
+        "► Volume Modes:\n\n"
+            "• Gen Volume 🎛️\n"
+            "• Auto Volume\n"
+            "• Human Mode 🤖\n"
+            "• Micro Buy\n"
+            "• Sell All 💸\n"
+            "• Single Wallet Sell\n\n"
+        "► Bundler:\n\n"
+           "• Safe Mode 🛟\n"
+           "• Experimental Mode ✏️\n"
+           "• Dump All 🏳️\n"
+           "• Dump All %\n"
+           "• Delay Sell 📉\n"
+           "• Delay Sell %\n"
+           "• Single Sell\n"
+           "• Raydium Sell 💰\n"
+           "• Send SPL\n\n"
+        "► Comments:\n\n"
+           "• Custom Commenter 💬\n\n"
+        "► Bump It:\n\n"
+           "• Custom Bump It (set username) ✅\n\n"
     )
     # Keyboard with only a Back button
     back_btn = types.InlineKeyboardButton("Back", callback_data="back")
@@ -62,10 +84,12 @@ async def purchase_section(callback: types.CallbackQuery):
     """Shows the Purchase & Pricing section with payment info and a refresh option."""
     purchase_text = (
         "💰 *Purchase & Pricing:*\n"
-        "To purchase, please send the required amount in SOL to the address below.\n"
+        "30 Day License - 1 SOL.\n"
+        "Ownership      - 4 SOL.\n"
         f"*SOL Address:* `{config.SOL_ADDRESS}`\n\n"
+        "Message @Rugbothelp for support\n"
         "After sending payment, click Refresh to check for updates.\n"
-        "_Note: Payment verification is manual. This bot does not automatically verify payments._"
+        "Note: Payment verification is manual. This bot does not automatically verify payments\n"
     )
     # Keyboard with Refresh and Back buttons
     refresh_btn = types.InlineKeyboardButton("Refresh 🔄", callback_data="refresh")
@@ -82,9 +106,12 @@ async def more_info_section(callback: types.CallbackQuery):
     """Shows the More Info section and a back button."""
     info_text = (
         "ℹ️ *More Information:*\n"
-        "This bot is designed to help users with X, Y, Z (additional info about the bot or usage).\n"
-        "It does not store any personal data or logs, ensuring your privacy.\n\n"
-        "For any questions, contact support or refer to the documentation."
+        "Our tool allows you to easily launch your own memecoin on Pump.fun, Raydium, and Moonshot\n"
+        "with built-in features to manipulate the price at launch.\n"
+        "By bundle-buying your own token, you create the illusion of an organic pump, attracting new investors.\n"
+        "With this bot you don’t need marketing or a following – the price action itself generates FOMO among traders.\n"
+        "Once the price surges and investors jump in, you can strategically dump your holdings for maximum profit.\n"
+        "If you have any questions don't hesitate to reach out: @Rugbothelp\n\n"
     )
     back_btn = types.InlineKeyboardButton("Back", callback_data="back")
     info_kb = types.InlineKeyboardMarkup().add(back_btn)
