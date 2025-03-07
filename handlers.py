@@ -35,8 +35,9 @@ async def back_to_main(callback: types.CallbackQuery):
     """Handles 'Dashboard' and 'Back' button presses by returning to main menu."""
     # Edit the message to show the main menu again
     main_text = (
-        "Hello, Guest!\n"
-        "You are back at the main menu (Dashboard). Please choose an option:"
+        "Main Menu"
+        "User: 920330\n"
+        "Version: 4.88.00"
     )
     # Re-use the same main menu keyboard
     await callback.message.edit_text(main_text, reply_markup=main_menu_keyboard)
