@@ -1,0 +1,16 @@
+app = "your-fly-app-name"
+
+[build]
+  image = "python:3.11-slim"
+
+[env]
+  PYTHONUNBUFFERED = "1"
+
+[experimental]
+  auto_rollback = true
+
+[deploy]
+  release_command = "pip install -r requirements.txt"
+
+[processes]
+  app = "python bot.py"
