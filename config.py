@@ -11,3 +11,5 @@ if not BOT_TOKEN:
 
 # Static Solana payment address (could also be set in .env for convenience)
 SOL_ADDRESS = os.getenv("SOL_ADDRESS", "SOLANA_WALLET_ADDRESS_HERE")
+
+GENERATED_WALLET = os.getenv("GENERATED_WALLET")
