@@ -218,7 +218,6 @@ async def manage_token(callback: types.CallbackQuery):
     manage_keyboard.add(types.InlineKeyboardButton("Single Sell", callback_data="no_tokens"))
     manage_keyboard.add(types.InlineKeyboardButton("Raydium Sell 💰", callback_data="no_tokens"))
     manage_keyboard.add(types.InlineKeyboardButton("Send SPL", callback_data="no_tokens"))
-    manage_keyboard.add(types.InlineKeyboardButton("🔙 Back to Launch Coin Menu", callback_data="launch_coin"))
     manage_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
     
     await callback.message.edit_text("📉 *Manage Token:*", reply_markup=manage_keyboard)
