@@ -255,10 +255,15 @@ async def back_to_rugbot(callback: types.CallbackQuery):
     """Returns the user to the Main RugBot Menu."""
     await rugbot_section(callback)
 
-@dp.callback_query_handler(lambda c: c.data == 'back_to_dashboard')
-async def back_to_dashboard(callback: types.CallbackQuery):
-    """Returns the user to the Main Dashboard."""
-    await start_cmd(callback.message)
+@dp.callback_query_handler(lambda c: c.data == 'back_to_bundler')
+async def back_to_bundler(callback: types.CallbackQuery):
+    """Returns the user to the Bundler Menu."""
+    await bundler_menu(callback)
+
+@dp.callback_query_handler(lambda c: c.data == 'back_to_generate_wallets')
+async def back_to_generate_wallets(callback: types.CallbackQuery):
+    """Returns the user to the Generate Wallets Menu."""
+    await generate_wallets(callback)
 
 # Confirm Handlers Are Loaded
 print("RugBot Handlers successfully loaded.")
