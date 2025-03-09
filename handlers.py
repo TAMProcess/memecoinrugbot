@@ -7,7 +7,6 @@ dp = Dispatcher(bot)
 
 # Helper: main menu keyboard
 main_menu_keyboard = types.InlineKeyboardMarkup()
-main_menu_keyboard.add(types.InlineKeyboardButton("Dashboard", callback_data="dashboard"))
 main_menu_keyboard.add(types.InlineKeyboardButton("RugBot", callback_data="RugBot"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Features", callback_data="features"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Purchase & Pricing", callback_data="purchase"))
@@ -124,6 +123,7 @@ async def more_info_section(callback: types.CallbackQuery):
 async def rugbot_section(callback: types.CallbackQuery):
     """Main RugBot Menu: Provides access to all RugBot features."""
     rugbot_keyboard = types.InlineKeyboardMarkup()
+    rugbot_keyboard.add(types.InlineKeyboardButton("License Key", callback_data="License_Key"))
     rugbot_keyboard.add(types.InlineKeyboardButton("Add Funds", callback_data="add_funds"))
     rugbot_keyboard.add(types.InlineKeyboardButton("Proxys & Node", callback_data="proxys_node"))
     rugbot_keyboard.add(types.InlineKeyboardButton("🏦 Bundler Menu", callback_data="bundler_menu"))
@@ -132,20 +132,45 @@ async def rugbot_section(callback: types.CallbackQuery):
     await callback.message.edit_text("📌 *RugBot Menu:*", reply_markup=rugbot_keyboard)
     await callback.answer()
 
+# Callback handler for License key section
+@dp.callback_query_handler(lambda c: c.data == 'license_Key')
+async def license_Key(callback: types.CallbackQuery):
+    """Handles license input."""
+    await callback.message.edit_text(
+        "💰 *Add License Key:*\n\n"
+        "Input License Key: `Insert Key Here`\n\n"
+        "Input your license key to begin.",
+        reply_markup=types.InlineKeyboardMarkup().add(
+            types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot")
+            types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="purchase")
+        )
+    )
+    await callback.answer()
+
 # Callback handler for Add Funds section
 @dp.callback_query_handler(lambda c: c.data == 'add_funds')
 async def add_funds(callback: types.CallbackQuery):
     """Displays the funder wallet address."""
     await callback.message.edit_text(
         "💰 *Add Funds:*\n\n"
-        "Generated Wallet: `9V3SZudj14oJsXbgYWvmj2TPgrQRbNZFcwj4YjyTwnQS`\n\n"
-        "This wallet address funds the bot.",
+        "Generated Wallet: `authentication key required`\n\n"
+        "Generated funder wallet is used to fund the bot.",
         reply_markup=types.InlineKeyboardMarkup().add(
             types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot")
+            types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="purchase")
         )
     )
     await callback.answer()
 
+# Callback handler for Proxy & Nodes Menu
+@dp.callback_query_handler(lambda c: c.data == 'Proxys_node')
+async def proxys_node(callback: types.CallbackQuery):
+    """menu for Proxy & Nodes."""
+    settings_keyboard = types.InlineKeyboardMarkup()
+    settings_keyboard.add(types.InlineKeyboardButton("Input Custom Proxy's", callback_data="proxy_not_required"))
+    settings_keyboard.add(types.InlineKeyboardButton("Input Custom Node", callback_data="node_not_required"))
+    types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="purchase"))
+    
 # Callback handler for Bundler Menu section
 @dp.callback_query_handler(lambda c: c.data == 'bundler_menu')
 async def bundler_menu(callback: types.CallbackQuery):
@@ -165,10 +190,10 @@ async def bundler_menu(callback: types.CallbackQuery):
 async def bundler_settings(callback: types.CallbackQuery):
     """Settings menu for Bundler features."""
     settings_keyboard = types.InlineKeyboardMarkup()
-    settings_keyboard.add(types.InlineKeyboardButton("Safe Mode 🛟", callback_data="funder_empty"))
-    settings_keyboard.add(types.InlineKeyboardButton("Experimental Mode ✏️", callback_data="funder_empty"))
-    settings_keyboard.add(types.InlineKeyboardButton("Custom Commenter 💬", callback_data="funder_empty"))
-    settings_keyboard.add(types.InlineKeyboardButton("Auto Volume 🤖", callback_data="no_tokens"))
+    settings_keyboard.add(types.InlineKeyboardButton("Safe Mode 🛟", callback_data="authentication_key_required"))
+    settings_keyboard.add(types.InlineKeyboardButton("Experimental Mode ✏️", callback_data="authentication_key_required"))
+    settings_keyboard.add(types.InlineKeyboardButton("Custom Commenter 💬", callback_data="authentication_key_required"))
+    settings_keyboard.add(types.InlineKeyboardButton("Auto Volume 🤖", callback_data="authentication_key_required"))
     settings_keyboard.add(types.InlineKeyboardButton("Return to Funder 💸", callback_data="insufficient_funds"))
     settings_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
 
@@ -180,9 +205,8 @@ async def bundler_settings(callback: types.CallbackQuery):
 async def generate_wallets(callback: types.CallbackQuery):
     """Handles wallet generation requests."""
     wallets_keyboard = types.InlineKeyboardMarkup()
-    wallets_keyboard.add(types.InlineKeyboardButton("Information & Setup", callback_data="wallet_info"))
     wallets_keyboard.add(types.InlineKeyboardButton("Generate Bundler Wallets", callback_data="wallet_input"))
-    wallets_keyboard.add(types.InlineKeyboardButton("Generate Wallets", callback_data="insufficient_funds"))
+    wallets_keyboard.add(types.InlineKeyboardButton("Generate Wallets", callback_data="authentication_key_required"))
     wallets_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
 
     await callback.message.edit_text("💳 *Generate Wallets:*", reply_markup=wallets_keyboard)
@@ -193,13 +217,13 @@ async def generate_wallets(callback: types.CallbackQuery):
 async def launch_coin(callback: types.CallbackQuery):
     """Handles token launch setup."""
     token_keyboard = types.InlineKeyboardMarkup()
-    token_keyboard.add(types.InlineKeyboardButton("Token Name", callback_data="token_name"))
-    token_keyboard.add(types.InlineKeyboardButton("Token Symbol", callback_data="token_symbol"))
-    token_keyboard.add(types.InlineKeyboardButton("Token Image", callback_data="token_image"))
-    token_keyboard.add(types.InlineKeyboardButton("Token Description", callback_data="token_description"))
-    token_keyboard.add(types.InlineKeyboardButton("Token Website", callback_data="token_website"))
-    token_keyboard.add(types.InlineKeyboardButton("Token Twitter", callback_data="token_twitter"))
-    token_keyboard.add(types.InlineKeyboardButton("Token Telegram", callback_data="token_telegram"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Name", callback_data="authentication_key_required"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Symbol", callback_data="authentication_key_required"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Image", callback_data="authentication_key_required"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Description", callback_data="authentication_key_required"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Website", callback_data="authentication_key_required"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Twitter", callback_data="authentication_key_required"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Telegram", callback_data="authentication_key_required"))
     token_keyboard.add(types.InlineKeyboardButton("Launch Token", callback_data="insufficient_funds"))
     token_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
 
@@ -211,13 +235,13 @@ async def launch_coin(callback: types.CallbackQuery):
 async def manage_token(callback: types.CallbackQuery):
     """Handles token management options."""
     manage_keyboard = types.InlineKeyboardMarkup()
-    manage_keyboard.add(types.InlineKeyboardButton("Dump All 🏳️", callback_data="no_tokens"))
-    manage_keyboard.add(types.InlineKeyboardButton("Dump All %", callback_data="no_tokens"))
-    manage_keyboard.add(types.InlineKeyboardButton("Delay Sell 📉", callback_data="no_tokens"))
-    manage_keyboard.add(types.InlineKeyboardButton("Delay Sell %", callback_data="no_tokens"))
-    manage_keyboard.add(types.InlineKeyboardButton("Single Sell", callback_data="no_tokens"))
-    manage_keyboard.add(types.InlineKeyboardButton("Raydium Sell 💰", callback_data="no_tokens"))
-    manage_keyboard.add(types.InlineKeyboardButton("Send SPL", callback_data="no_tokens"))
+    manage_keyboard.add(types.InlineKeyboardButton("Dump All 🏳️", callback_data="authentication_key_required"))
+    manage_keyboard.add(types.InlineKeyboardButton("Dump All %", callback_data="authentication_key_required"))
+    manage_keyboard.add(types.InlineKeyboardButton("Delay Sell 📉", callback_data="authentication_key_required"))
+    manage_keyboard.add(types.InlineKeyboardButton("Delay Sell %", callback_data="authentication_key_required"))
+    manage_keyboard.add(types.InlineKeyboardButton("Single Sell", callback_data="authentication_key_required"))
+    manage_keyboard.add(types.InlineKeyboardButton("Raydium Sell 💰", callback_data="authentication_key_required"))
+    manage_keyboard.add(types.InlineKeyboardButton("Send SPL", callback_data="Token_Balance_0"))
     manage_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
     
     await callback.message.edit_text("📉 *Manage Token:*", reply_markup=manage_keyboard)
@@ -228,10 +252,9 @@ async def manage_token(callback: types.CallbackQuery):
 async def export_keys(callback: types.CallbackQuery):
     """Handles private key export requests."""
     export_keyboard = types.InlineKeyboardMarkup()
-    export_keyboard.add(types.InlineKeyboardButton("Export Generated Wallets", callback_data="funder_empty"))
-    export_keyboard.add(types.InlineKeyboardButton("Export Funder Wallet", callback_data="funder_balance"))
+    export_keyboard.add(types.InlineKeyboardButton("Export Generated Wallets", callback_data="authentication_key_required""))
+    export_keyboard.add(types.InlineKeyboardButton("Export Funder Wallet", callback_data="authentication_key_required"))
     export_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
-    export_keyboard.add(types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot"))
 
     await callback.message.edit_text("🔑 *Export Private Keys:*", reply_markup=export_keyboard)
     await callback.answer()
@@ -241,6 +264,15 @@ async def export_keys(callback: types.CallbackQuery):
 async def funder_empty(callback: types.CallbackQuery):
     await callback.answer("Funder Wallet Empty", show_alert=True)
 
+
+@dp.callback_query_handler(lambda c: c.data == 'node_not_required')
+async def node_not_required(callback: types.CallbackQuery):
+    await callback.answer("Input License Key To Edit Node, note: custom nodes are optional", show_alert=True)  
+        
+@dp.callback_query_handler(lambda c: c.data == 'proxy_not_required')
+async def proxy_not_required(callback: types.CallbackQuery):
+    await callback.answer("Input License Key To Edit Proxy, note: proxy are optional", show_alert=True)        
+
 @dp.callback_query_handler(lambda c: c.data == 'no_tokens')
 async def no_tokens(callback: types.CallbackQuery):
     await callback.answer("No tokens created", show_alert=True)
@@ -249,6 +281,10 @@ async def no_tokens(callback: types.CallbackQuery):
 async def insufficient_funds(callback: types.CallbackQuery):
     await callback.answer("Insufficient Funds, Please Add Funds", show_alert=True)
 
+@dp.callback_query_handler(lambda c: c.data == 'authentication_key_required')
+async def authentication_key_required(callback: types.CallbackQuery):
+    await callback.answer("Authetication Key Required, Please Input License", show_alert=True)
+        
 # Universal Back Button Handlers
 @dp.callback_query_handler(lambda c: c.data == 'back_to_rugbot')
 async def back_to_rugbot(callback: types.CallbackQuery):
