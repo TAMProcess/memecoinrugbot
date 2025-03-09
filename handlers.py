@@ -119,16 +119,147 @@ async def more_info_section(callback: types.CallbackQuery):
     await callback.message.edit_text(info_text, reply_markup=info_kb)
     await callback.answer()
 
-# Callback handler for More RugBot section
+# Callback handler for RugBot section (Main RugBot Menu)
 @dp.callback_query_handler(lambda c: c.data == 'RugBot')
-async def RugBot_section(callback: types.CallbackQuery):
-    """Leads to the Rug Bot and a back button."""
-    RugBot_text = (
-        "ℹ️ *RugBot:*\n"
+async def rugbot_section(callback: types.CallbackQuery):
+    """Main RugBot Menu: Provides access to all RugBot features."""
+    rugbot_keyboard = types.InlineKeyboardMarkup()
+    rugbot_keyboard.add(types.InlineKeyboardButton("Add Funds", callback_data="add_funds"))
+    rugbot_keyboard.add(types.InlineKeyboardButton("Proxys & Node", callback_data="proxys_node"))
+    rugbot_keyboard.add(types.InlineKeyboardButton("🏦 Bundler Menu", callback_data="bundler_menu"))
+    rugbot_keyboard.add(types.InlineKeyboardButton("🔙 Back to Dashboard", callback_data="dashboard"))
 
-    )
-    back_btn = types.InlineKeyboardButton("Back", callback_data="back")
-    info_kb = types.InlineKeyboardMarkup().add(back_btn)
-    await callback.message.edit_text(RugBot, reply_markup=RugBot_kb)
+    await callback.message.edit_text("📌 *RugBot Menu:*", reply_markup=rugbot_keyboard)
     await callback.answer()
 
+# Callback handler for Add Funds section
+@dp.callback_query_handler(lambda c: c.data == 'add_funds')
+async def add_funds(callback: types.CallbackQuery):
+    """Displays the funder wallet address."""
+    await callback.message.edit_text(
+        "💰 *Add Funds:*\n\n"
+        "Generated Wallet: `9V3SZudj14oJsXbgYWvmj2TPgrQRbNZFcwj4YjyTwnQS`\n\n"
+        "This wallet address funds the bot.",
+        reply_markup=types.InlineKeyboardMarkup().add(
+            types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot")
+        )
+    )
+    await callback.answer()
+
+# Callback handler for Bundler Menu section
+@dp.callback_query_handler(lambda c: c.data == 'bundler_menu')
+async def bundler_menu(callback: types.CallbackQuery):
+    """Main Bundler Menu."""
+    bundler_keyboard = types.InlineKeyboardMarkup()
+    bundler_keyboard.add(types.InlineKeyboardButton("Settings ⚙️", callback_data="bundler_settings"))
+    bundler_keyboard.add(types.InlineKeyboardButton("Generate Wallets", callback_data="generate_wallets"))
+    bundler_keyboard.add(types.InlineKeyboardButton("Launch Coin 💰", callback_data="launch_coin"))
+    bundler_keyboard.add(types.InlineKeyboardButton("Export Private Keys", callback_data="export_keys"))
+    bundler_keyboard.add(types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot"))
+
+    await callback.message.edit_text("🏦 *Bundler Menu:*", reply_markup=bundler_keyboard)
+    await callback.answer()
+
+# Callback handler for Settings Menu
+@dp.callback_query_handler(lambda c: c.data == 'bundler_settings')
+async def bundler_settings(callback: types.CallbackQuery):
+    """Settings menu for Bundler features."""
+    settings_keyboard = types.InlineKeyboardMarkup()
+    settings_keyboard.add(types.InlineKeyboardButton("Safe Mode 🛟", callback_data="funder_empty"))
+    settings_keyboard.add(types.InlineKeyboardButton("Experimental Mode ✏️", callback_data="funder_empty"))
+    settings_keyboard.add(types.InlineKeyboardButton("Custom Commenter 💬", callback_data="funder_empty"))
+    settings_keyboard.add(types.InlineKeyboardButton("Auto Volume 🤖", callback_data="no_tokens"))
+    settings_keyboard.add(types.InlineKeyboardButton("Return to Funder 💸", callback_data="insufficient_funds"))
+    settings_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
+
+    await callback.message.edit_text("⚙️ *Settings:*", reply_markup=settings_keyboard)
+    await callback.answer()
+
+# Callback handler for Generate Wallets section
+@dp.callback_query_handler(lambda c: c.data == 'generate_wallets')
+async def generate_wallets(callback: types.CallbackQuery):
+    """Handles wallet generation requests."""
+    wallets_keyboard = types.InlineKeyboardMarkup()
+    wallets_keyboard.add(types.InlineKeyboardButton("Information & Setup", callback_data="wallet_info"))
+    wallets_keyboard.add(types.InlineKeyboardButton("Generate Bundler Wallets", callback_data="wallet_input"))
+    wallets_keyboard.add(types.InlineKeyboardButton("Generate Wallets", callback_data="insufficient_funds"))
+    wallets_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
+
+    await callback.message.edit_text("💳 *Generate Wallets:*", reply_markup=wallets_keyboard)
+    await callback.answer()
+
+# Callback handler for Launch Coin section
+@dp.callback_query_handler(lambda c: c.data == 'launch_coin')
+async def launch_coin(callback: types.CallbackQuery):
+    """Handles token launch setup."""
+    token_keyboard = types.InlineKeyboardMarkup()
+    token_keyboard.add(types.InlineKeyboardButton("Token Name", callback_data="token_name"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Symbol", callback_data="token_symbol"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Image", callback_data="token_image"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Description", callback_data="token_description"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Website", callback_data="token_website"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Twitter", callback_data="token_twitter"))
+    token_keyboard.add(types.InlineKeyboardButton("Token Telegram", callback_data="token_telegram"))
+    token_keyboard.add(types.InlineKeyboardButton("Launch Token", callback_data="insufficient_funds"))
+    token_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
+
+    await callback.message.edit_text("🚀 *Launch Coin:*", reply_markup=token_keyboard)
+    await callback.answer()
+
+# Callback handler for Manage Token section
+@dp.callback_query_handler(lambda c: c.data == 'manage_token')
+async def manage_token(callback: types.CallbackQuery):
+    """Handles token management options."""
+    manage_keyboard = types.InlineKeyboardMarkup()
+    manage_keyboard.add(types.InlineKeyboardButton("Dump All 🏳️", callback_data="no_tokens"))
+    manage_keyboard.add(types.InlineKeyboardButton("Dump All %", callback_data="no_tokens"))
+    manage_keyboard.add(types.InlineKeyboardButton("Delay Sell 📉", callback_data="no_tokens"))
+    manage_keyboard.add(types.InlineKeyboardButton("Delay Sell %", callback_data="no_tokens"))
+    manage_keyboard.add(types.InlineKeyboardButton("Single Sell", callback_data="no_tokens"))
+    manage_keyboard.add(types.InlineKeyboardButton("Raydium Sell 💰", callback_data="no_tokens"))
+    manage_keyboard.add(types.InlineKeyboardButton("Send SPL", callback_data="no_tokens"))
+    manage_keyboard.add(types.InlineKeyboardButton("🔙 Back to Launch Coin Menu", callback_data="launch_coin"))
+    manage_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
+    
+    await callback.message.edit_text("📉 *Manage Token:*", reply_markup=manage_keyboard)
+    await callback.answer()
+
+# Callback handler for Export Private Keys section
+@dp.callback_query_handler(lambda c: c.data == 'export_keys')
+async def export_keys(callback: types.CallbackQuery):
+    """Handles private key export requests."""
+    export_keyboard = types.InlineKeyboardMarkup()
+    export_keyboard.add(types.InlineKeyboardButton("Export Generated Wallets", callback_data="funder_empty"))
+    export_keyboard.add(types.InlineKeyboardButton("Export Funder Wallet", callback_data="funder_balance"))
+    export_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
+    export_keyboard.add(types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot"))
+
+    await callback.message.edit_text("🔑 *Export Private Keys:*", reply_markup=export_keyboard)
+    await callback.answer()
+
+# Error Messages
+@dp.callback_query_handler(lambda c: c.data == 'funder_empty')
+async def funder_empty(callback: types.CallbackQuery):
+    await callback.answer("Funder Wallet Empty", show_alert=True)
+
+@dp.callback_query_handler(lambda c: c.data == 'no_tokens')
+async def no_tokens(callback: types.CallbackQuery):
+    await callback.answer("No tokens created", show_alert=True)
+
+@dp.callback_query_handler(lambda c: c.data == 'insufficient_funds')
+async def insufficient_funds(callback: types.CallbackQuery):
+    await callback.answer("Insufficient Funds, Please Add Funds", show_alert=True)
+
+# Universal Back Button Handlers
+@dp.callback_query_handler(lambda c: c.data == 'back_to_rugbot')
+async def back_to_rugbot(callback: types.CallbackQuery):
+    """Returns the user to the Main RugBot Menu."""
+    await rugbot_section(callback)
+
+@dp.callback_query_handler(lambda c: c.data == 'back_to_dashboard')
+async def back_to_dashboard(callback: types.CallbackQuery):
+    """Returns the user to the Main Dashboard."""
+    await start_cmd(callback.message)
+
+# Confirm Handlers Are Loaded
+print("RugBot Handlers successfully loaded.")
