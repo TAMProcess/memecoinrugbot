@@ -123,7 +123,7 @@ async def more_info_section(callback: types.CallbackQuery):
 async def rugbot_section(callback: types.CallbackQuery):
     """Main RugBot Menu: Provides access to all RugBot features."""
     rugbot_keyboard = types.InlineKeyboardMarkup()
-    rugbot_keyboard.add(types.InlineKeyboardButton("License Key", callback_data="License_Key"))
+    rugbot_keyboard.add(types.InlineKeyboardButton("License Key", callback_data="license_key"))
     rugbot_keyboard.add(types.InlineKeyboardButton("Add Funds", callback_data="add_funds"))
     rugbot_keyboard.add(types.InlineKeyboardButton("Proxys & Node", callback_data="proxys_node"))
     rugbot_keyboard.add(types.InlineKeyboardButton("🏦 Bundler Menu", callback_data="bundler_menu"))
@@ -133,8 +133,8 @@ async def rugbot_section(callback: types.CallbackQuery):
     await callback.answer()
 
 # Callback handler for License key section
-@dp.callback_query_handler(lambda c: c.data == 'license_Key')
-async def license_Key(callback: types.CallbackQuery):
+@dp.callback_query_handler(lambda c: c.data == 'license_key')
+async def license_key(callback: types.CallbackQuery):
     """Handles license input."""
     await callback.message.edit_text(
         "💰 *Add License Key:*\n\n"
@@ -142,7 +142,6 @@ async def license_Key(callback: types.CallbackQuery):
         "Input your license key to begin.",
         reply_markup=types.InlineKeyboardMarkup().add(
             types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot")
-            types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="purchase")
         )
     )
     await callback.answer()
@@ -157,19 +156,21 @@ async def add_funds(callback: types.CallbackQuery):
         "Generated funder wallet is used to fund the bot.",
         reply_markup=types.InlineKeyboardMarkup().add(
             types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot")
-            types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="purchase")
         )
     )
     await callback.answer()
 
 # Callback handler for Proxy & Nodes Menu
-@dp.callback_query_handler(lambda c: c.data == 'Proxys_node')
+@dp.callback_query_handler(lambda c: c.data == 'proxys_node')
 async def proxys_node(callback: types.CallbackQuery):
     """menu for Proxy & Nodes."""
     settings_keyboard = types.InlineKeyboardMarkup()
     settings_keyboard.add(types.InlineKeyboardButton("Input Custom Proxy's", callback_data="proxy_not_required"))
     settings_keyboard.add(types.InlineKeyboardButton("Input Custom Node", callback_data="node_not_required"))
-    types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="purchase"))
+    types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot"))
+
+    await callback.message.edit_text("*proxys & node:*", reply_markup=proxys_keyboard)
+    await callback.answer()
     
 # Callback handler for Bundler Menu section
 @dp.callback_query_handler(lambda c: c.data == 'bundler_menu')
@@ -179,6 +180,7 @@ async def bundler_menu(callback: types.CallbackQuery):
     bundler_keyboard.add(types.InlineKeyboardButton("Settings ⚙️", callback_data="bundler_settings"))
     bundler_keyboard.add(types.InlineKeyboardButton("Generate Wallets", callback_data="generate_wallets"))
     bundler_keyboard.add(types.InlineKeyboardButton("Launch Coin 💰", callback_data="launch_coin"))
+    bundler_keyboard.add(types.InlineKeyboardButton("Manage Token", callback_data="manage_token"))
     bundler_keyboard.add(types.InlineKeyboardButton("Export Private Keys", callback_data="export_keys"))
     bundler_keyboard.add(types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot"))
 
@@ -252,7 +254,7 @@ async def manage_token(callback: types.CallbackQuery):
 async def export_keys(callback: types.CallbackQuery):
     """Handles private key export requests."""
     export_keyboard = types.InlineKeyboardMarkup()
-    export_keyboard.add(types.InlineKeyboardButton("Export Generated Wallets", callback_data="authentication_key_required""))
+    export_keyboard.add(types.InlineKeyboardButton("Export Generated Wallets", callback_data="authentication_key_required"))
     export_keyboard.add(types.InlineKeyboardButton("Export Funder Wallet", callback_data="authentication_key_required"))
     export_keyboard.add(types.InlineKeyboardButton("🔙 Back to Bundler Menu", callback_data="bundler_menu"))
 
@@ -263,7 +265,6 @@ async def export_keys(callback: types.CallbackQuery):
 @dp.callback_query_handler(lambda c: c.data == 'funder_empty')
 async def funder_empty(callback: types.CallbackQuery):
     await callback.answer("Funder Wallet Empty", show_alert=True)
-
 
 @dp.callback_query_handler(lambda c: c.data == 'node_not_required')
 async def node_not_required(callback: types.CallbackQuery):
