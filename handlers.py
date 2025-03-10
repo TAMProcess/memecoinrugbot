@@ -111,13 +111,13 @@ async def purchase_section(callback: types.CallbackQuery):
 @dp.callback_query_handler(lambda c: c.data == 'tutorial')
 async def tutorial(callback: types.CallbackQuery):
     """shows buttons for downloading tutorial"""
-    settings_keyboard = types.InlineKeyboardMarkup()
-    settings_keyboard.add(types.InlineKeyboardButton("Download Tutorial", callback_data="purchase_license"))
-    settings_keyboard.add(types.InlineKeyboardButton("Download Setup Guide 💬", callback_data="purchase_license"))
-    settings_keyboard.add(types.InlineKeyboardButton("Access Developer Portal 🤖", callback_data="purchase_license"))
-    rugbot_keyboard.add(types.InlineKeyboardButton("🔙 Back to Dashboard", callback_data="dashboard"))
+    tutorial_keyboard = types.InlineKeyboardMarkup()
+    tutorial_keyboard.add(types.InlineKeyboardButton("Download Tutorial", callback_data="purchase_license"))
+    tutorial_keyboard.add(types.InlineKeyboardButton("Download Setup Guide 💬", callback_data="purchase_license"))
+    tutorial_keyboard.add(types.InlineKeyboardButton("Access Developer Portal 🤖", callback_data="purchase_license"))
+    tutorial_keyboard.add(types.InlineKeyboardButton("Back", callback_data="dashboard"))
 
-    await callback.message.edit_text("*Tutorial & Guide:*", reply_markup=tutorial_kb)
+    await callback.message.edit_text("*Tutorial & Guide:*", reply_markup=tutorial_keyboard)
     await callback.answer()
 
 # Callback handler for RugBot section (Main RugBot Menu)
