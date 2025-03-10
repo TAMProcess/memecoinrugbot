@@ -10,7 +10,7 @@ main_menu_keyboard = types.InlineKeyboardMarkup()
 main_menu_keyboard.add(types.InlineKeyboardButton("RugBot", callback_data="RugBot"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Features", callback_data="features"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Purchase & Pricing", callback_data="purchase"))
-main_menu_keyboard.add(types.InlineKeyboardButton("More Info", callback_data="moreinfo"))
+main_menu_keyboard.add(types.InlineKeyboardButton("Tutorial & Guide", callback_data="Tutorial"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Vouches", url="https://t.me/vouchesrugbot"))
 
 # /start command handler
@@ -71,6 +71,13 @@ async def features_section(callback: types.CallbackQuery):
            "• Custom Commenter 💬\n\n"
         "► Bump It:\n\n"
            "• Custom Bump It (set username) ✅\n\n"
+        "ℹ️ *More Information:*\n\n"
+        "Our tool allows you to easily launch your own memecoin on Pump.fun, Raydium, and Moonshot\n"
+        "with built-in features to manipulate the price at launch.\n"
+        "By bundle-buying your own token, you create the illusion of an organic pump, attracting new investors.\n"
+        "With this bot you don’t need marketing or a following – the price action itself generates FOMO among traders.\n"
+        "Once the price surges and investors jump in, you can strategically dump your holdings for maximum profit.\n"
+        "If you have any questions don't hesitate to reach out: @Rugbothelp\n\n"
     )
     # Keyboard with only a Back button
     back_btn = types.InlineKeyboardButton("Back", callback_data="back")
@@ -100,22 +107,17 @@ async def purchase_section(callback: types.CallbackQuery):
     await callback.message.edit_text(purchase_text, reply_markup=purchase_kb)
     await callback.answer()
 
-# Callback handler for More Info section
-@dp.callback_query_handler(lambda c: c.data == 'moreinfo')
-async def more_info_section(callback: types.CallbackQuery):
-    """Shows the More Info section and a back button."""
-    info_text = (
-        "ℹ️ *More Information:*\n"
-        "Our tool allows you to easily launch your own memecoin on Pump.fun, Raydium, and Moonshot\n"
-        "with built-in features to manipulate the price at launch.\n"
-        "By bundle-buying your own token, you create the illusion of an organic pump, attracting new investors.\n"
-        "With this bot you don’t need marketing or a following – the price action itself generates FOMO among traders.\n"
-        "Once the price surges and investors jump in, you can strategically dump your holdings for maximum profit.\n"
-        "If you have any questions don't hesitate to reach out: @Rugbothelp\n\n"
-    )
-    back_btn = types.InlineKeyboardButton("Back", callback_data="back")
-    info_kb = types.InlineKeyboardMarkup().add(back_btn)
-    await callback.message.edit_text(info_text, reply_markup=info_kb)
+# Callback handler for tutorial section
+@dp.callback_query_handler(lambda c: c.data == 'tutorial')
+async def tutorial(callback: types.CallbackQuery):
+    """shows buttons for downloading tutorial"""
+    settings_keyboard = types.InlineKeyboardMarkup()
+    settings_keyboard.add(types.InlineKeyboardButton("Download Tutorial", callback_data="purchase_license"))
+    settings_keyboard.add(types.InlineKeyboardButton("Download Setup Guide 💬", callback_data="purchase_license"))
+    settings_keyboard.add(types.InlineKeyboardButton("Access Developer Portal 🤖", callback_data="purchase_license"))
+    rugbot_keyboard.add(types.InlineKeyboardButton("🔙 Back to Dashboard", callback_data="dashboard"))
+
+    await callback.message.edit_text("*Tutorial & Guide:*", reply_markup=rugbot_keyboard)
     await callback.answer()
 
 # Callback handler for RugBot section (Main RugBot Menu)
@@ -265,6 +267,10 @@ async def export_keys(callback: types.CallbackQuery):
 @dp.callback_query_handler(lambda c: c.data == 'funder_empty')
 async def funder_empty(callback: types.CallbackQuery):
     await callback.answer("Funder Wallet Empty", show_alert=True)
+
+@dp.callback_query_handler(lambda c: c.data == 'purchase_license')
+async def purchase_license(callback: types.CallbackQuery):
+    await callback.answer("Purchase license to download tutorials and access rugbot guide", show_alert=True)  
 
 @dp.callback_query_handler(lambda c: c.data == 'node_not_required')
 async def node_not_required(callback: types.CallbackQuery):
