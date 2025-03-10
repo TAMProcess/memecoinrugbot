@@ -10,7 +10,7 @@ main_menu_keyboard = types.InlineKeyboardMarkup()
 main_menu_keyboard.add(types.InlineKeyboardButton("RugBot", callback_data="RugBot"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Features", callback_data="features"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Purchase & Pricing", callback_data="purchase"))
-main_menu_keyboard.add(types.InlineKeyboardButton("Tutorial & Guide", callback_data="Tutorial"))
+main_menu_keyboard.add(types.InlineKeyboardButton("Tutorial & Guide", callback_data="tutorial"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Vouches", url="https://t.me/vouchesrugbot"))
 
 # /start command handler
