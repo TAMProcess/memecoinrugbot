@@ -117,7 +117,7 @@ async def tutorial(callback: types.CallbackQuery):
     settings_keyboard.add(types.InlineKeyboardButton("Access Developer Portal 🤖", callback_data="purchase_license"))
     rugbot_keyboard.add(types.InlineKeyboardButton("🔙 Back to Dashboard", callback_data="dashboard"))
 
-    await callback.message.edit_text("*Tutorial & Guide:*", reply_markup=rugbot_keyboard)
+    await callback.message.edit_text("*Tutorial & Guide:*", reply_markup=tutorial_kb)
     await callback.answer()
 
 # Callback handler for RugBot section (Main RugBot Menu)
