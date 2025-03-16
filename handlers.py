@@ -13,7 +13,6 @@ main_menu_keyboard.add(types.InlineKeyboardButton("Purchase & Pricing", callback
 main_menu_keyboard.add(types.InlineKeyboardButton("Tutorial & Guide", callback_data="tutorial"))
 main_menu_keyboard.add(types.InlineKeyboardButton("Vouches", url="https://t.me/vouchesrugbot"))
 
-# /start command handler
 @dp.message_handler(commands=['start'])
 async def start_cmd(message: types.Message):
     """Handle /start command: greets the user as 'Guest' and shows main menu."""
@@ -24,9 +23,20 @@ async def start_cmd(message: types.Message):
         "@RugbotHelp\n"
         "Welcome to MemeCoinRugBot an all one Bundler & Trading Bot\n"
     )
+    purchase_text = (
+        "💰 *Purchase & Pricing:*\n"
+        "3 Day Trial License - 1 SOL.\n"
+        "Ownership           - 4 SOL.\n"
+        f"*SOL Address:* `{config.SOL_ADDRESS}`\n\n"
+        "Message @Rugbothelp for support\n"
+        "After sending payment, click Refresh to check for updates.\n"
+        "Note: Payment verification is manual. This bot does not automatically verify payments\n"
+    )
     # Send welcome message with main menu inline keyboard
     await message.answer(welcome_text, reply_markup=main_menu_keyboard)
-
+    # Send purchase and pricing information
+    await message.answer(purchase_text)
+    
 # Callback handler for main menu navigation (Dashboard and Back both lead to main menu)
 @dp.callback_query_handler(lambda c: c.data in ['dashboard', 'back'])
 async def back_to_main(callback: types.CallbackQuery):
