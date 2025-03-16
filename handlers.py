@@ -140,13 +140,24 @@ async def license_key(callback: types.CallbackQuery):
     """Handles license input."""
     await callback.message.edit_text(
         "💰 *Add License Key:*\n\n"
-        "Input License Key: `Insert Key Here`\n\n"
-        "Input your license key to begin.",
+        "Please input your license key below:",
         reply_markup=types.InlineKeyboardMarkup().add(
             types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot")
         )
     )
+    await callback.message.answer(
+        "Input License Key:",
+        reply_markup=types.ForceReply(selective=True)
+    )
     await callback.answer()
+
+# Message handler to capture the license key input
+@dp.message_handler(lambda message: message.reply_to_message and message.reply_to_message.text == "Input License Key:")
+async def handle_license_key_input(message: types.Message):
+    """Processes the license key input from the user."""
+    license_key = message.text
+    # Process the license key (e.g., validate and store it)
+    await message.answer(f"License Key '{license_key}' received and processed.")
 
 # Callback handler for Add Funds section
 @dp.callback_query_handler(lambda c: c.data == 'add_funds')
