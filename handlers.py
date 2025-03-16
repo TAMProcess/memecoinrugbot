@@ -190,7 +190,7 @@ async def proxys_node(callback: types.CallbackQuery):
     settings_keyboard = types.InlineKeyboardMarkup()
     settings_keyboard.add(types.InlineKeyboardButton("Input Custom Proxy's", callback_data="proxy_not_required"))
     settings_keyboard.add(types.InlineKeyboardButton("Input Custom Node", callback_data="node_not_required"))
-    types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot")
+    settings_keyboard.add(types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot"))
 
     await callback.message.edit_text("*Proxy & Nodes:*", reply_markup=settings_keyboard)
     await callback.answer()
