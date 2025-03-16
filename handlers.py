@@ -192,7 +192,7 @@ async def proxys_node(callback: types.CallbackQuery):
     settings_keyboard.add(types.InlineKeyboardButton("Input Custom Node", callback_data="node_not_required"))
     types.InlineKeyboardButton("🔙 Back to Main RugBot Menu", callback_data="RugBot")
 
-    await callback.message.edit_text("*proxys & node:*", reply_markup=proxys_keyboard)
+    await callback.message.edit_text("*Proxy & Nodes:*", reply_markup=settings_keyboard)
     await callback.answer()
     
 # Callback handler for Bundler Menu section
